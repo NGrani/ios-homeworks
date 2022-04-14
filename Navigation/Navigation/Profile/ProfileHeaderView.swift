@@ -31,14 +31,14 @@ class ProfileHeaderView: UIView {
         return name
     }
 
-    var status: UILabel {
-        let status = UILabel(frame: CGRect(x: profileVC.view.frame.midX - 25, y:profileImageView.bounds.maxY - 18 , width: 300, height: 200))
+    var status: UILabel = {
+        let status = UILabel(frame: CGRect(x: 135, y: 90 , width: 300, height: 200))
         status.font = UIFont(name:"HelveticaNeue", size: 14.0)
-        status.textColor = .gray
+        status.textColor = UIColor.gray
         status.adjustsFontSizeToFitWidth = true
-        status.text = statusText
+        status.text = "Waiting for something..."
         return status
-    }
+    }()
 
 
 
@@ -85,7 +85,6 @@ class ProfileHeaderView: UIView {
         if let statusText = statusText {
             status.text = statusText
                 print(statusText)
-                print(status.text)
         }
     }
 
