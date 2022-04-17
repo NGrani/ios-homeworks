@@ -16,6 +16,7 @@
 		85505ECD2801A2EE001DD4B7 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85505ECC2801A2EE001DD4B7 /* FeedViewController.swift */; };
 		85505ECF2801A9E3001DD4B7 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85505ECE2801A9E3001DD4B7 /* PostViewController.swift */; };
 		85505ED12801A9F9001DD4B7 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85505ED02801A9F9001DD4B7 /* InfoViewController.swift */; };
+		85505EF42802D41D001DD4B7 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85505EF32802D41D001DD4B7 /* ProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		85505ECC2801A2EE001DD4B7 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		85505ECE2801A9E3001DD4B7 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		85505ED02801A9F9001DD4B7 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		85505EF32802D41D001DD4B7 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,18 +64,27 @@
 		85505EB128019CB5001DD4B7 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				85505EF22802D383001DD4B7 /* Profile */,
 				85505EB228019CB5001DD4B7 /* AppDelegate.swift */,
 				85505EB428019CB5001DD4B7 /* SceneDelegate.swift */,
 				85505EC82801A26D001DD4B7 /* MainTabBar.swift */,
 				85505ECE2801A9E3001DD4B7 /* PostViewController.swift */,
 				85505ED02801A9F9001DD4B7 /* InfoViewController.swift */,
-				85505ECA2801A2B4001DD4B7 /* ProfileViewController.swift */,
 				85505ECC2801A2EE001DD4B7 /* FeedViewController.swift */,
 				85505EBB28019CB7001DD4B7 /* Assets.xcassets */,
 				85505EBD28019CB7001DD4B7 /* LaunchScreen.storyboard */,
 				85505EC028019CB7001DD4B7 /* Info.plist */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		85505EF22802D383001DD4B7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				85505ECA2801A2B4001DD4B7 /* ProfileViewController.swift */,
+				85505EF32802D41D001DD4B7 /* ProfileHeaderView.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +164,7 @@
 				85505ECB2801A2B4001DD4B7 /* ProfileViewController.swift in Sources */,
 				85505EB328019CB5001DD4B7 /* AppDelegate.swift in Sources */,
 				85505EB528019CB5001DD4B7 /* SceneDelegate.swift in Sources */,
+				85505EF42802D41D001DD4B7 /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
