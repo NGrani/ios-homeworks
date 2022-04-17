@@ -11,6 +11,7 @@ class MainTabBar: UITabBarController {
 
     let profileVC = ProfileViewController()
     let feedVC = FeedViewController()
+    let loginVC = LogInViewController()
    
 
     override func viewDidLoad() {
@@ -21,6 +22,7 @@ class MainTabBar: UITabBarController {
     private func setupControllers(){
         let navigationProfileController = UINavigationController(rootViewController: profileVC)
         let navigationFeedController = UINavigationController(rootViewController: feedVC)
+        let navigationloginController = UINavigationController(rootViewController: loginVC)
 
         profileVC.tabBarItem.title = "Профиль"
         profileVC.tabBarItem.image = UIImage(systemName: "person")
@@ -28,9 +30,14 @@ class MainTabBar: UITabBarController {
         feedVC.tabBarItem.title = "Новости"
         feedVC.tabBarItem.image = UIImage(systemName: "house")
         feedVC.navigationItem.title = "Новости"
+        loginVC.tabBarItem.title = "Профиль"
+        loginVC.tabBarItem.image = UIImage(systemName: "person")
+        loginVC.navigationItem.title = "Профиль"
+        loginVC.navigationController?.navigationBar.isHidden = true
+        
 
 
-        viewControllers = [navigationProfileController, navigationFeedController]
+        viewControllers = [navigationloginController, navigationFeedController]
     }
 
 

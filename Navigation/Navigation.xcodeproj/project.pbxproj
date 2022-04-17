@@ -17,6 +17,7 @@
 		85505ECF2801A9E3001DD4B7 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85505ECE2801A9E3001DD4B7 /* PostViewController.swift */; };
 		85505ED12801A9F9001DD4B7 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85505ED02801A9F9001DD4B7 /* InfoViewController.swift */; };
 		85505EF42802D41D001DD4B7 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85505EF32802D41D001DD4B7 /* ProfileHeaderView.swift */; };
+		859D6F2B280C866D00CEF35A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859D6F2A280C866D00CEF35A /* LogInViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		85505ECE2801A9E3001DD4B7 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		85505ED02801A9F9001DD4B7 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		85505EF32802D41D001DD4B7 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		859D6F2A280C866D00CEF35A /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			children = (
 				85505ECA2801A2B4001DD4B7 /* ProfileViewController.swift */,
 				85505EF32802D41D001DD4B7 /* ProfileHeaderView.swift */,
+				859D6F2A280C866D00CEF35A /* LogInViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			files = (
 				85505ECF2801A9E3001DD4B7 /* PostViewController.swift in Sources */,
 				85505ECD2801A2EE001DD4B7 /* FeedViewController.swift in Sources */,
+				859D6F2B280C866D00CEF35A /* LogInViewController.swift in Sources */,
 				85505EC92801A26D001DD4B7 /* MainTabBar.swift in Sources */,
 				85505ED12801A9F9001DD4B7 /* InfoViewController.swift in Sources */,
 				85505ECB2801A2B4001DD4B7 /* ProfileViewController.swift in Sources */,
