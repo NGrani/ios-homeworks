@@ -8,75 +8,100 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    private lazy var profileHeader: ProfileHeaderView = {
-        let profileHeader = ProfileHeaderView()
-        profileHeader.translatesAutoresizingMaskIntoConstraints = false
-        return profileHeader
+    private let nc = NotificationCenter.default
+
+    private lazy var postModel: [[PostModel]] = PostModel.makePost()
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
+        return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        nc.addObserver(self, selector: #selector(keyboardShow), name:  UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
-    override func viewWillLayoutSubviews() {
-        layout()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        nc.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+    }
+    @objc private func keyboardShow(notification: NSNotification){
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue{
+            tableView.contentInset.bottom = keyboardSize.height
+            tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        }
+    }
+    @objc private func keyboardHide(){
+        tableView.contentInset = .zero
+        tableView.verticalScrollIndicatorInsets = .zero
     }
 
-    private func layout(){
-        view.addSubview(profileHeader)
-
-        profileHeader.addSubview(profileHeader.profileImageView)
-        profileHeader.addSubview(profileHeader.textField)
-        profileHeader.addSubview(profileHeader.tapButton)
-        profileHeader.addSubview(profileHeader.newTapButton)
-        profileHeader.addSubview(profileHeader.status)
-        profileHeader.addSubview(profileHeader.name)
+    override func viewWillLayoutSubviews() {
+        view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
-            profileHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            profileHeader.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            profileHeader.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            profileHeader.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            profileHeader.heightAnchor.constraint(equalToConstant: 220)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
-        NSLayoutConstraint.activate([
-            profileHeader.textField.heightAnchor.constraint(equalToConstant: 40),
-            profileHeader.textField.bottomAnchor.constraint(equalTo: profileHeader.tapButton.topAnchor, constant: -8),
-            profileHeader.textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            profileHeader.textField.leadingAnchor.constraint(equalTo: profileHeader.profileImageView.trailingAnchor, constant: 16)
-        ])
+    }
 
-        NSLayoutConstraint.activate([ profileHeader.tapButton.topAnchor.constraint(equalTo: profileHeader.profileImageView.bottomAnchor, constant: 16),
-            profileHeader.tapButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            profileHeader.tapButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileHeader.tapButton.heightAnchor.constraint(equalToConstant: 50)
 
-        ])
+    }
+// MARK: - UITableViewDataSource
 
-        NSLayoutConstraint.activate([            profileHeader.profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            profileHeader.profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileHeader.profileImageView.widthAnchor.constraint(equalToConstant: 110),
-            profileHeader.profileImageView.heightAnchor.constraint(equalToConstant: 110)
-         ])
+extension  ProfileViewController: UITableViewDataSource{
 
-        NSLayoutConstraint.activate([
-            profileHeader.name.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
-            profileHeader.name.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return postModel.count
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return postModel[section].count
+    }
 
-        NSLayoutConstraint.activate([
-            profileHeader.status.leadingAnchor.constraint(equalTo: profileHeader.textField.leadingAnchor),
-            profileHeader.status.bottomAnchor.constraint(equalTo: profileHeader.textField.topAnchor, constant: -8),
-        ])
-        NSLayoutConstraint.activate([
-            profileHeader.newTapButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            profileHeader.newTapButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            profileHeader.newTapButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+        cell.setupCell(postModel[indexPath.section][indexPath.row])
+        return cell
+    }
+
+
 }
 
+
+// MARK: - UITableViewDelegate
+
+extension ProfileViewController: UITableViewDelegate{
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = ProfileHeaderView()
+        return header
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailPostVC = DetailPostViewController()
+        detailPostVC.setupDetailPostVC(model: postModel[indexPath.section][indexPath.row])
+
+        present(detailPostVC, animated: true)
+    }
 }
+
 
 
