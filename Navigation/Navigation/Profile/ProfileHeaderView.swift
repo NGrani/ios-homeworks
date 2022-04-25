@@ -8,11 +8,8 @@
 import UIKit
 
 class ProfileHeaderView: UIView {
-    private lazy var profileVC: ProfileViewController = {
-        let profileVC = ProfileViewController()
-        return profileVC
-    }()
-   
+
+  
    private var statusText: String? = "Waiting for something..."
 
     let profileImageView: UIImageView = {
@@ -59,6 +56,7 @@ class ProfileHeaderView: UIView {
         textField.font = UIFont(name:"HelveticaNeue", size: 15.0)
         textField.textAlignment = .center
         textField.textColor = .black
+        textField.delegate = self
         textField.placeholder = "Введите статус"
         textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
 
@@ -87,11 +85,12 @@ class ProfileHeaderView: UIView {
     @objc  func pressAction(){
         if let statusText = statusText {
             status.text = statusText
+            textField.text = ""
                 print(statusText)
         }
     }
 
-// Пункт 3 "Добавьте новую UIButton, изменить title.."
+
     var newTapButton: UIButton = {
         let updateStatus = UIButton()
         updateStatus.translatesAutoresizingMaskIntoConstraints = false
@@ -106,11 +105,78 @@ class ProfileHeaderView: UIView {
       return updateStatus
     }()
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        layout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     @objc  func doAction(){
         newTapButton.setTitle("Ты нажал кнопку", for: .normal)
         }
+
+    private func layout(){
+            addSubview(profileImageView)
+            addSubview(textField)
+            addSubview(tapButton)
+            addSubview(newTapButton)
+            addSubview(status)
+            addSubview(name)
+
+            NSLayoutConstraint.activate([
+                textField.heightAnchor.constraint(equalToConstant: 40),
+                textField.bottomAnchor.constraint(equalTo: tapButton.topAnchor, constant: -8),
+                textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+                textField.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16)
+            ])
+
+            NSLayoutConstraint.activate([
+               tapButton.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 16),
+               tapButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+               tapButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+               tapButton.heightAnchor.constraint(equalToConstant: 50),
+            ])
+
+            NSLayoutConstraint.activate([
+                profileImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+                profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+                profileImageView.widthAnchor.constraint(equalToConstant: 110),
+                profileImageView.heightAnchor.constraint(equalToConstant: 110)
+             ])
+
+            NSLayoutConstraint.activate([
+                name.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
+                name.centerXAnchor.constraint(equalTo: centerXAnchor)
+            ])
+
+            NSLayoutConstraint.activate([
+                status.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
+                status.bottomAnchor.constraint(equalTo: textField.topAnchor, constant: -8),
+            ])
+            NSLayoutConstraint.activate([
+                newTapButton.topAnchor.constraint(equalTo: tapButton.bottomAnchor, constant: 12),
+                newTapButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+                newTapButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+                newTapButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            ])
     }
 
-
+}
+// MARK: - UITextFieldDelegate
+extension ProfileHeaderView: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        endEditing(true)
+        pressAction()
+        textField.text = ""
+        return true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+            endEditing(true)
+    }
+}
 
 
