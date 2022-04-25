@@ -8,75 +8,143 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    private lazy var profileHeader: ProfileHeaderView = {
-        let profileHeader = ProfileHeaderView()
-        profileHeader.translatesAutoresizingMaskIntoConstraints = false
-        return profileHeader
+    private let nc = NotificationCenter.default
+
+
+    private lazy var postModel: [PostModel] = PostModel.makePost()
+    private lazy var photoModel: [PhotoModel] = PhotoModel.makePost()
+    private lazy var mySection: [[Any]] = [photoModel, postModel]
+
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
+        return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
     }
-
-    override func viewWillLayoutSubviews() {
-        layout()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+        
+        nc.addObserver(self, selector: #selector(keyboardShow), name:  UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
-    private func layout(){
-        view.addSubview(profileHeader)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        nc.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
 
-        profileHeader.addSubview(profileHeader.profileImageView)
-        profileHeader.addSubview(profileHeader.textField)
-        profileHeader.addSubview(profileHeader.tapButton)
-        profileHeader.addSubview(profileHeader.newTapButton)
-        profileHeader.addSubview(profileHeader.status)
-        profileHeader.addSubview(profileHeader.name)
+    @objc private func keyboardShow(notification: NSNotification){
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue{
+            tableView.contentInset.bottom = keyboardSize.height
+            tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        }
+    }
+    @objc private func keyboardHide(){
+        tableView.contentInset = .zero
+        tableView.verticalScrollIndicatorInsets = .zero
+    }
 
-        NSLayoutConstraint.activate([
-            profileHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            profileHeader.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            profileHeader.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            profileHeader.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            profileHeader.heightAnchor.constraint(equalToConstant: 220)
-        ])
-
-        NSLayoutConstraint.activate([
-            profileHeader.textField.heightAnchor.constraint(equalToConstant: 40),
-            profileHeader.textField.bottomAnchor.constraint(equalTo: profileHeader.tapButton.topAnchor, constant: -8),
-            profileHeader.textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            profileHeader.textField.leadingAnchor.constraint(equalTo: profileHeader.profileImageView.trailingAnchor, constant: 16)
-        ])
-
-        NSLayoutConstraint.activate([ profileHeader.tapButton.topAnchor.constraint(equalTo: profileHeader.profileImageView.bottomAnchor, constant: 16),
-            profileHeader.tapButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            profileHeader.tapButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileHeader.tapButton.heightAnchor.constraint(equalToConstant: 50)
-
-        ])
-
-        NSLayoutConstraint.activate([            profileHeader.profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            profileHeader.profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileHeader.profileImageView.widthAnchor.constraint(equalToConstant: 110),
-            profileHeader.profileImageView.heightAnchor.constraint(equalToConstant: 110)
-         ])
+    override func viewWillLayoutSubviews() {
+        view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
-            profileHeader.name.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
-            profileHeader.name.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
-        NSLayoutConstraint.activate([
-            profileHeader.status.leadingAnchor.constraint(equalTo: profileHeader.textField.leadingAnchor),
-            profileHeader.status.bottomAnchor.constraint(equalTo: profileHeader.textField.topAnchor, constant: -8),
-        ])
-        NSLayoutConstraint.activate([
-            profileHeader.newTapButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            profileHeader.newTapButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            profileHeader.newTapButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-}
+    }
+    @objc  func pressAction(){
+        let photoVC = PhotosViewController()
+        photoVC.title = "Фото"
+        navigationController?.pushViewController(photoVC, animated: true)
+    }
 
 }
+// MARK: - UITableViewDataSource
+
+extension  ProfileViewController: UITableViewDataSource{
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return mySection.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return mySection[section].count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if mySection[indexPath.section] is [PhotoModel]{
+            let cell = tableView.dequeueReusableCell(withIdentifier:
+                                                        PhotosTableViewCell.identifier, for: indexPath) as! PhotosTableViewCell
+            cell.setupCell(photoModel[indexPath.row])
+            cell.tapButton.addTarget(self, action:  #selector(pressAction), for: .touchUpInside)
+            return cell
+        } else if  mySection[indexPath.section] is [PostModel]{
+            let cell = tableView.dequeueReusableCell(withIdentifier:
+                                                        PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+            cell.setupCell(postModel[indexPath.row])
+            return cell
+        } else {
+            return UITableViewCell()
+        }
+    }
+}
+
+
+// MARK: - UITableViewDelegate
+
+extension ProfileViewController: UITableViewDelegate{
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch section {
+        case 0:
+            let header = ProfileHeaderView()
+            return header
+        default:
+            return nil
+        }
+
+    }
+
+        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            switch section {
+            case 0:
+                return UITableView.automaticDimension
+            default:
+                return 0
+            }
+        }
+
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if  mySection[indexPath.section] is [PostModel]{
+            let detailPostVC = DetailPostViewController()
+            detailPostVC.setupDetailPostVC(model: postModel[indexPath.row])
+            present(detailPostVC, animated: true)
+        } else if mySection[indexPath.section] is [PhotoModel]{
+            let photoVC = PhotosViewController()
+            photoVC.title = "Фото"
+            navigationController?.pushViewController(photoVC, animated: true)
+        }
+    }
+}
+
 
 

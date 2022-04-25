@@ -48,9 +48,9 @@ class FeedViewController: UIViewController {
 
     @objc private func tapAction(){
         let postVC = PostViewController()
-        var newPostTitle = self.post?.title
-        newPostTitle = "Новый пост"
-        postVC.title = newPostTitle
+        let post = Post(title: "Новый пост")
+        postVC.title = post.title
+      
 
         navigationController?.pushViewController(postVC, animated: true)
     }
