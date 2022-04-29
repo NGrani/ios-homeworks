@@ -27,6 +27,7 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         layout()
+        setupGestures()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -45,11 +46,13 @@ class LogInViewController: UIViewController {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue{
             scrollView.contentInset.bottom = keyboardSize.height
             scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            scrollView.horizontalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
         }
     }
     @objc private func keyboardHide(){
         scrollView.contentInset = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
+        scrollView.horizontalScrollIndicatorInsets = .zero
     }
 
     private let stackView: UIStackView = {
@@ -66,6 +69,15 @@ class LogInViewController: UIViewController {
         return stackView
     }()
 
+    private func setupGestures() {
+        let tapScreen = UITapGestureRecognizer(target: self, action: #selector(tapDismiss))
+        tapScreen.cancelsTouchesInView = false
+            view.addGestureRecognizer(tapScreen)
+    }
+    @objc private func tapDismiss(){
+        view.endEditing(true)
+    }
+
     var logo: UIImageView = {
         let logo = UIImageView()
         logo.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +90,9 @@ class LogInViewController: UIViewController {
         login.translatesAutoresizingMaskIntoConstraints = false
         login.backgroundColor = .systemGray6
         login.textColor = .black
-        login.textAlignment = .center
+        login.textAlignment = .left
+        login.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: login.frame.height))
+        login.leftViewMode = .always
         login.font = .systemFont(ofSize: 16)
         login.autocapitalizationType = .none
         login.delegate = self
@@ -91,7 +105,9 @@ class LogInViewController: UIViewController {
         password.translatesAutoresizingMaskIntoConstraints = false
         password.backgroundColor = .systemGray6
         password.textColor = .black
-        password.textAlignment = .center
+        password.textAlignment = .left
+        password.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: password.frame.height))
+        password.leftViewMode = .always
         password.font = .systemFont(ofSize: 16)
         password.autocapitalizationType = .none
         password.delegate = self
@@ -130,14 +146,12 @@ class LogInViewController: UIViewController {
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
 
-        [logo, loginButton].forEach {view.addSubview($0)}
-        view.addSubview(stackView)
         [login, password].forEach {stackView.addArrangedSubview($0)}
-
+        [logo, loginButton, stackView].forEach {contentView.addSubview($0)}
 
         NSLayoutConstraint.activate([
             logo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            logo.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 120),
+            logo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
             logo.heightAnchor.constraint(equalToConstant: 100),
             logo.widthAnchor.constraint(equalToConstant: 100)
         ])
@@ -153,7 +167,8 @@ class LogInViewController: UIViewController {
             loginButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            loginButton.heightAnchor.constraint(equalToConstant: 50)
+            loginButton.heightAnchor.constraint(equalToConstant: 50),
+            loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50)
         ])
     }
 
@@ -162,12 +177,13 @@ class LogInViewController: UIViewController {
 
 
 // MARK: - UITextFieldDelegate
-extension LogInViewController: UITextFieldDelegate{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(true)
-        return true
+
+    extension LogInViewController: UITextFieldDelegate{
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            view.endEditing(true)
+            return true
+        }
     }
-}
 
 // MARK: - HexToUIColor
 extension UIColor {
