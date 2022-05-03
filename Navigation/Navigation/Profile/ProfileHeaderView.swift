@@ -42,10 +42,12 @@ class ProfileHeaderView: UIView {
     }()
 
     private func setupGestures() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        let tapGestureImage = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         profileImageView.isUserInteractionEnabled = true
-        profileImageView.addGestureRecognizer(tapGesture)
+        profileImageView.addGestureRecognizer(tapGestureImage)
     }
+
+
 
     private var closeProfileImageButton: UIButton = {
         let closeProfileImageButton = UIButton()
@@ -103,7 +105,7 @@ class ProfileHeaderView: UIView {
         updateStatus.layer.shadowColor = UIColor.black.cgColor
         updateStatus.layer.shadowOpacity = 0.7
         updateStatus.setTitle("Обновить статус", for: .normal)
-        updateStatus.backgroundColor = .blue
+        updateStatus.backgroundColor = UIColor("#4885CC")
         updateStatus.addTarget(self, action: #selector(pressAction), for: .touchUpInside)
         return updateStatus
     }()
@@ -117,7 +119,7 @@ class ProfileHeaderView: UIView {
         updateStatus.layer.shadowColor = UIColor.black.cgColor
         updateStatus.layer.shadowOpacity = 0.7
         updateStatus.setTitle("Кнопка", for: .normal)
-        updateStatus.backgroundColor = .blue
+        updateStatus.backgroundColor = UIColor("#4885CC")
         updateStatus.addTarget(self, action: #selector(doAction), for: .touchUpInside)
         return updateStatus
     }()
@@ -130,6 +132,13 @@ class ProfileHeaderView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func textFieldAnimate(_ textField: UITextField){
+        UITextField.animate(withDuration: 1, delay: 0, options: .curveEaseIn) {
+            textField.backgroundColor = .systemGray
+            textField.backgroundColor = .white
+        }
     }
 
     @objc private func tapAction() {
@@ -170,6 +179,19 @@ class ProfileHeaderView: UIView {
     }
 
     @objc private func pressAction(){
+        UIView.animate(withDuration: 0.1,
+                           animations: {
+            self.tapButton.alpha = 0.5
+            }) { (completed) in
+                UIView.animate(withDuration: 0.5,
+                               animations: {
+                    self.tapButton.alpha = 1
+                })
+            }
+        guard !textField.isEmpty else {
+            textFieldAnimate(textField)
+            return
+        }
         if let statusText = statusText {
             status.text = statusText
             textField.text = ""
@@ -178,6 +200,15 @@ class ProfileHeaderView: UIView {
     }
 
     @objc private func doAction(){
+        UIView.animate(withDuration: 0.1,
+                           animations: {
+            self.newTapButton.alpha = 0.5
+            }) { (completed) in
+                UIView.animate(withDuration: 0.5,
+                               animations: {
+                    self.newTapButton.alpha = 1
+                })
+            }
         newTapButton.setTitle("Ты нажал кнопку", for: .normal)
     }
 

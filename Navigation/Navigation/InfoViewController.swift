@@ -8,7 +8,7 @@
 import UIKit
 
 class InfoViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .orange
@@ -22,11 +22,10 @@ class InfoViewController: UIViewController {
         showPost.backgroundColor = .green
         showPost.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
         view.addSubview(showPost)
-
+        
     }
-
+    
     @objc private func tapAction(){
-       
         let alert = UIAlertController(title: "Вернуться к посту", message: "Вы точно хотите вернуться к посту?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Вернуться", style: .default) { _ in
             self.dismiss(animated: true)
@@ -36,6 +35,4 @@ class InfoViewController: UIViewController {
         alert.addAction(cancelAction)
         present(alert, animated: true)
     }
-
-
 }

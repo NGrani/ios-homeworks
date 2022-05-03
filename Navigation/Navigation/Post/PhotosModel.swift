@@ -9,12 +9,10 @@ import UIKit
 
 struct PhotoModel{
     let photosLabel: String
-
+    
     static func makePost()-> [PhotoModel]{
         var model = [PhotoModel]()
-
         model.append(PhotoModel(photosLabel: "Photos"))
-
         return model
-}
+    }
 }

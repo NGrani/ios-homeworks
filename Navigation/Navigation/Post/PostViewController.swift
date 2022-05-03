@@ -15,7 +15,6 @@ class PostViewController: UIViewController {
         view.backgroundColor = .purple
         tapBarButton()
     }
-    let feedVC = FeedViewController()
     
     private func tapBarButton(){
         let showPost = UIBarButtonItem(title: "Инфо", style: .plain, target: self, action: #selector(tapAction))
@@ -24,7 +23,6 @@ class PostViewController: UIViewController {
 
     @objc private func tapAction(){
         let infoVC = InfoViewController()
-        
         present(infoVC, animated: true)
     }
 

@@ -8,16 +8,7 @@
 import UIKit
 
 class PhotosTableViewCell: UITableViewCell {
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        layout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     private let cellView: UIView = {
         let cellView = UIView()
         cellView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,6 +46,16 @@ class PhotosTableViewCell: UITableViewCell {
         
         return collection
     }()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        layout()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     func setupCell(_ model: PhotoModel){
         photosLabel.text = model.photosLabel
@@ -73,13 +74,13 @@ class PhotosTableViewCell: UITableViewCell {
             collectionView.topAnchor.constraint(equalTo: photosLabel.bottomAnchor, constant: 12),
             collectionView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 12),
             collectionView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -12),
-            collectionView.heightAnchor.constraint(equalToConstant: 83),
+            collectionView.heightAnchor.constraint(equalToConstant: 94),
             collectionView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -12)
         ])
         
         NSLayoutConstraint.activate([
             photosLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 12),
-            photosLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 12),
+            photosLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 12)
         ])
         
         NSLayoutConstraint.activate([
@@ -89,6 +90,7 @@ class PhotosTableViewCell: UITableViewCell {
     }
     
 }
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout{
     private var sideInset: CGFloat { return 8 }
@@ -110,6 +112,7 @@ extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout{
         sideInset
     }
 }
+// MARK: - UICollectionViewDataSource
 
 extension PhotosTableViewCell: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

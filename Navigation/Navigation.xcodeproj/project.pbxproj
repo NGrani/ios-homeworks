@@ -11,7 +11,6 @@
 		851800F528132A8C0083AB59 /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851800F428132A8C0083AB59 /* PhotosModel.swift */; };
 		851800F828132F4D0083AB59 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851800F728132F4D0083AB59 /* PhotosViewController.swift */; };
 		851800FA281332140083AB59 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851800F9281332140083AB59 /* PhotosCollectionViewCell.swift */; };
-		851800FE281346920083AB59 /* makeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851800FD281346920083AB59 /* makeCollection.swift */; };
 		8518010028135BCD0083AB59 /* PhotoModelCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851800FF28135BCD0083AB59 /* PhotoModelCollection.swift */; };
 		85505EB328019CB5001DD4B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85505EB228019CB5001DD4B7 /* AppDelegate.swift */; };
 		85505EB528019CB5001DD4B7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85505EB428019CB5001DD4B7 /* SceneDelegate.swift */; };
@@ -35,7 +34,6 @@
 		851800F428132A8C0083AB59 /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
 		851800F728132F4D0083AB59 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		851800F9281332140083AB59 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
-		851800FD281346920083AB59 /* makeCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = makeCollection.swift; sourceTree = "<group>"; };
 		851800FF28135BCD0083AB59 /* PhotoModelCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModelCollection.swift; sourceTree = "<group>"; };
 		85505EAF28019CB5001DD4B7 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85505EB228019CB5001DD4B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,7 +103,6 @@
 				85505ED02801A9F9001DD4B7 /* InfoViewController.swift */,
 				85505ECC2801A2EE001DD4B7 /* FeedViewController.swift */,
 				858D9043280D95C7000AC5AD /* indetifier.swift */,
-				851800FD281346920083AB59 /* makeCollection.swift */,
 				85505EBB28019CB7001DD4B7 /* Assets.xcassets */,
 				85505EBD28019CB7001DD4B7 /* LaunchScreen.storyboard */,
 				85505EC028019CB7001DD4B7 /* Info.plist */,
@@ -223,7 +220,6 @@
 				858D9044280D95C7000AC5AD /* indetifier.swift in Sources */,
 				851800FA281332140083AB59 /* PhotosCollectionViewCell.swift in Sources */,
 				858D9047280DDC81000AC5AD /* DetailPostViewController.swift in Sources */,
-				851800FE281346920083AB59 /* makeCollection.swift in Sources */,
 				85505EF42802D41D001DD4B7 /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

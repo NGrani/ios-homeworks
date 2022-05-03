@@ -16,14 +16,11 @@ class FeedViewController: UIViewController {
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        //        stackView.backgroundColor = .blue
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.spacing = 10
         return stackView
     }()
-
-    var post: Post?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +29,7 @@ class FeedViewController: UIViewController {
 
     }
 
-    var postButton: UIButton = {
+    private let postButton: UIButton = {
         let postButton = UIButton()
         postButton.translatesAutoresizingMaskIntoConstraints = false
         postButton.layer.cornerRadius = 4
@@ -50,12 +47,10 @@ class FeedViewController: UIViewController {
         let postVC = PostViewController()
         let post = Post(title: "Новый пост")
         postVC.title = post.title
-      
-
         navigationController?.pushViewController(postVC, animated: true)
     }
 
-    var postButtonTwo: UIButton = {
+    private let postButtonTwo: UIButton = {
         let postButton = UIButton()
         postButton.translatesAutoresizingMaskIntoConstraints = false
         postButton.layer.cornerRadius = 4
@@ -79,7 +74,5 @@ class FeedViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-
     }
-
 }

@@ -23,6 +23,9 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         customizeCell()
         layout()
     }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     func setupCell(_ model: PhotosModelCollection){
         photoImage.image = model.image
@@ -38,9 +41,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
             photoImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
     private func customizeCell(){
         photoImage.layer.cornerRadius = 6
     }

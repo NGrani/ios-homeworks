@@ -54,6 +54,13 @@ class PostTableViewCell: UITableViewCell {
         return likeLabel
     }()
 
+    var likeButton: UIButton = {
+        let likeButton = UIButton()
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        likeButton.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.normal)
+        return likeButton
+    }()
+
     private let viewsLabel: UILabel = {
         let viewsLabel = UILabel()
         viewsLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -76,12 +83,12 @@ class PostTableViewCell: UITableViewCell {
         postImage.image = model.image
         autorLabel.text = model.author
         descriptionLabel.text = model.description
-        likeLabel.text = "like \(model.likes)"
+        likeLabel.text = "\(model.likes)"
         viewsLabel.text = "views \(model.views)"
     }
 
     func layout() {
-        [cellView, postImage, autorLabel ,descriptionLabel, likeLabel, viewsLabel].forEach { contentView.addSubview($0)}
+        [cellView, postImage, autorLabel ,descriptionLabel, likeLabel, viewsLabel, likeButton].forEach { contentView.addSubview($0)}
 
         NSLayoutConstraint.activate([
             cellView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -108,14 +115,21 @@ class PostTableViewCell: UITableViewCell {
 
         NSLayoutConstraint.activate([
             likeLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            likeLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 16),
-            likeLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: 8)
+
+            likeLabel.leadingAnchor.constraint(equalTo: likeButton.leadingAnchor, constant: 26),
+            likeLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -8)
+        ])
+
+        NSLayoutConstraint.activate([
+            likeButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
+            likeButton.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 16),
+            likeButton.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -8)
         ])
 
         NSLayoutConstraint.activate([
             viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
             viewsLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -16),
-            viewsLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: 8)
+            viewsLabel.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -8)
         ])
 
     }
