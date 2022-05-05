@@ -110,20 +110,6 @@ class ProfileHeaderView: UIView {
         return updateStatus
     }()
 
-    private var newTapButton: UIButton = {
-        let updateStatus = UIButton()
-        updateStatus.translatesAutoresizingMaskIntoConstraints = false
-        updateStatus.layer.cornerRadius = 4
-        updateStatus.layer.shadowOffset = CGSize(width: 4, height: 4)
-        updateStatus.layer.shadowRadius = 4
-        updateStatus.layer.shadowColor = UIColor.black.cgColor
-        updateStatus.layer.shadowOpacity = 0.7
-        updateStatus.setTitle("Кнопка", for: .normal)
-        updateStatus.backgroundColor = UIColor("#4885CC")
-        updateStatus.addTarget(self, action: #selector(doAction), for: .touchUpInside)
-        return updateStatus
-    }()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -199,23 +185,9 @@ class ProfileHeaderView: UIView {
         }
     }
 
-    @objc private func doAction(){
-        UIView.animate(withDuration: 0.1,
-                           animations: {
-            self.newTapButton.alpha = 0.5
-            }) { (completed) in
-                UIView.animate(withDuration: 0.5,
-                               animations: {
-                    self.newTapButton.alpha = 1
-                })
-            }
-        newTapButton.setTitle("Ты нажал кнопку", for: .normal)
-    }
-
     private func layout(){
         addSubview(textField)
         addSubview(tapButton)
-        addSubview(newTapButton)
         addSubview(status)
         addSubview(name)
         addSubview(viewUnderImage)
@@ -250,13 +222,7 @@ class ProfileHeaderView: UIView {
             tapButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             tapButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             tapButton.heightAnchor.constraint(equalToConstant: 50),
-        ])
-
-        NSLayoutConstraint.activate([
-            newTapButton.topAnchor.constraint(equalTo: tapButton.bottomAnchor, constant: 12),
-            newTapButton.leadingAnchor.constraint(equalTo: leadingAnchor),
-            newTapButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-            newTapButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            tapButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
 
         leadingProfileImageView = profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)

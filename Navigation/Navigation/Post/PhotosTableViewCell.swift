@@ -74,7 +74,7 @@ class PhotosTableViewCell: UITableViewCell {
             collectionView.topAnchor.constraint(equalTo: photosLabel.bottomAnchor, constant: 12),
             collectionView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 12),
             collectionView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -12),
-            collectionView.heightAnchor.constraint(equalToConstant: 94),
+            collectionView.heightAnchor.constraint(equalToConstant: 83),
             collectionView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -12)
         ])
         

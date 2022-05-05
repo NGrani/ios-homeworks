@@ -48,10 +48,8 @@ class PhotosViewController: UIViewController {
             self.closeProfileImageButton.alpha = 0.0
         } completion: { _ in
             UIView.animate(withDuration: 0.9, delay: 0, options: .curveEaseIn) { [self] in
-
-                if let removable = view.viewWithTag(10){
-                   removable.removeFromSuperview()
-                }
+                self.navigationController?.navigationBar.alpha = 1
+                self.navigationController?.tabBarController?.tabBar.alpha = 1
                 viewUnderImage.alpha = 0.0
                 collectionView.reloadData()
             }
@@ -131,9 +129,10 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout{
         UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseIn) {
             self.viewUnderImage.alpha = 0.8
             self.view.addSubview(cell!)
-            cell?.tag = 10
             cell?.transform =  CGAffineTransform(scaleX: 3, y: 3)
             cell?.center = CGPoint(x: collectionView.center.x, y: collectionView.center.y)
+            self.navigationController?.navigationBar.alpha = 0
+            self.navigationController?.tabBarController?.tabBar.alpha = 0
 
             self.view.layoutIfNeeded()
         } completion: { _ in
