@@ -13,21 +13,16 @@ class PostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .purple
-//        title = "mmm"
         tapBarButton()
-
     }
-    let feedVC = FeedViewController()
     
     private func tapBarButton(){
         let showPost = UIBarButtonItem(title: "Инфо", style: .plain, target: self, action: #selector(tapAction))
         navigationItem.rightBarButtonItem = showPost
-
     }
 
     @objc private func tapAction(){
         let infoVC = InfoViewController()
-        
         present(infoVC, animated: true)
     }
 
